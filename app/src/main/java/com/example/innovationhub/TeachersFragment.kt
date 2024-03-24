@@ -34,41 +34,62 @@ class TeachersFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teachers, container, false)
+   override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View? {
+    // Inflate the layout for this fragment
+    val view = inflater.inflate(R.layout.fragment_teachers, container, false)
+
+    // Set click listener for contact_trainer
+    view.contact_trainer.setOnClickListener {
+        showContactTrainerDialog()
     }
 
-
-
+    return view
+}
 
 private fun showContactTrainerDialog() {
-    val alertDialog = AlertDialog.Builder(requireContext())
-    alertDialog.setTitle("Dialog title")
-    alertDialog.setMessage("Dialog message")
+    val builder = AlertDialog.Builder(requireContext())
+    builder.setTitle("Ask Our Trainer")
+
+    // Set up the input
+    val input = EditText(requireContext())
+    input.inputType = InputType.TYPE_CLASS_TEXT
+    builder.setView(input)
+
+    // Set up the buttons
+    builder.setPositiveButton("OK") { dialog, _ ->
+        // Do something when OK button is clicked
+        val userInput = input.text.toString()
+        // Process userInput here, e.g., send it somewhere or perform an action
+        dialog.dismiss()
+    }
+    builder.setNegativeButton("Cancel") { dialog, _ ->
+        // Do something when Cancel button is clicked
+        dialog.cancel()
+    }
+
+    val alertDialog = builder.create()
     alertDialog.show()
 }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TeachersFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TeachersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+companion object {
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment TeachersFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    @JvmStatic
+    fun newInstance(param1: String, param2: String) =
+        TeachersFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM1, param1)
+                putString(ARG_PARAM2, param2)
             }
-    }
+        }
 }
